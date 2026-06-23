@@ -208,8 +208,31 @@ document
 
     a.href = url;
 
+    const version =
+    graphData.casegraph_version || "0.1.0";
+
+    const sourceFile =
+        graphData.source_file || "case.pdf";
+
+    const originalName =
+        sourceFile
+            .replace(".pdf","")
+            .replaceAll(" ","_");
+
+    const now = new Date();
+
+    const dateString =
+        now.getFullYear().toString()
+        + String(now.getMonth()+1).padStart(2,"0")
+        + String(now.getDate()).padStart(2,"0");
+
+    const timeString =
+        String(now.getHours()).padStart(2,"0")
+        + String(now.getMinutes()).padStart(2,"0")
+        + String(now.getSeconds()).padStart(2,"0");
+
     a.download =
-        "casegraph_result.json";
+        `cg_${version}_${dateString}_${timeString}_${originalName}.json`;
 
     a.click();
 

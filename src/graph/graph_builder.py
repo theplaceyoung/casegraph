@@ -1,5 +1,6 @@
 import json
-
+import uuid
+from datetime import datetime
 
 def build_graph(doc, entities):
 
@@ -58,29 +59,51 @@ def build_graph(doc, entities):
     )
     if agency and company:
         edges.append({
-            "data": {
-                "source": agency,
-                "target": company,
-                "label": "의결"
-            }
-        })
+        "data": {
+            "id": str(uuid.uuid4()),
+            "source": agency,
+            "target": company,
+            "label": "의결"
+        }
+    })
 
     for entity_type, entity_name in entities:
 
+        if entity_name == company:
+                continue
+            
         add_node(entity_name, entity_type)
 
         if company:
             edges.append({
                 "data": {
+                    "id": str(uuid.uuid4()),
                     "source": company,
                     "target": entity_name,
                     "label": entity_type
                 }
             })
 
+
     return {
+
+        "casegraph_version": "0.1.0",
+
+        "generated_at":
+            datetime.now().strftime(
+                "%Y-%m-%d %H:%M:%S"
+            ),
+
+        "source_file":
+            doc.get("filename"),
+
+        "case_name":
+            doc.get("사건명"),
+
         "nodes": nodes,
+
         "edges": edges
+
     }
 
 

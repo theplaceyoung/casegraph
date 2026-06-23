@@ -26,16 +26,12 @@ if __name__ == "__main__":
             entities
         )
 
-    save_graph(
-        graph,
-        "generated/graph.json"
-    )
-    
-    graph = process_pdf(
-        "raw/의결서_귀한사람들.pdf"
-    )
+    # graph = process_pdf(
+    #     "raw/의결서_귀한사람들.pdf",
+    #     "의결서_귀한사람들.pdf"
+    # )
 
-    save_graph(
-        graph,
-        "generated/graph.json"
-    )
+    # save_graph(
+    #     graph,
+    #     "generated/graph.json"
+    # )

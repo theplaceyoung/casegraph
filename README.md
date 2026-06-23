@@ -1,3 +1,13 @@
+## Quick Start
+
+```bash
+git clone ...
+cd casegraph
+
+pip install -r requirements.txt
+
+python app.py
+
 # CaseGraph
 
 CaseGraph is an assistant for researchers that transforms legal decisions into structured graphs and machine-readable data.

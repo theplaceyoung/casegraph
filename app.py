@@ -19,11 +19,9 @@ def index():
 @app.route("/upload", methods=["POST"])
 def upload():
 
-    file = request.files["pdf"]
-
     os.makedirs(
-        "uploads",
-        exist_ok=True
+    "uploads",
+    exist_ok=True
     )
 
     os.makedirs(
@@ -31,11 +29,18 @@ def upload():
         exist_ok=True
     )
 
+    file = request.files["pdf"]
+
+    filename = file.filename
+
     path = "uploads/tmp.pdf"
 
     file.save(path)
 
-    graph = process_pdf(path)
+    graph = process_pdf(
+        path,
+        filename
+    )
 
     save_graph(
         graph,
