@@ -60,3 +60,20 @@ def convert_all_pdfs():
 
     for pdf_file in pdf_files:
         convert_pdf_to_markdown(pdf_file, md_dir)
+        
+def convert_pdf(pdf_path):
+
+    pdf_path = Path(pdf_path)
+
+    md_dir = Path("markdown")
+
+    md_dir.mkdir(exist_ok=True)
+
+    convert_pdf_to_markdown(
+        pdf_path,
+        md_dir
+    )
+
+    md_path = md_dir / f"{pdf_path.stem}.md"
+
+    return md_path

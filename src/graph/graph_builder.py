@@ -6,48 +6,77 @@ def build_graph(doc, entities):
     nodes = []
     edges = []
 
-    node_set = set()
+    node_ids = set()
 
-    def add_node(node_id, node_type):
+    def add_node(node_id, node_type, extra_data=None):
 
-        if node_id in node_set:
+        if not node_id:
             return
 
+        if node_id in node_ids:
+            return
+
+        data = {
+            "id": node_id,
+            "label": node_id,
+            "type": node_type
+        }
+
+        if extra_data:
+            data.update(extra_data)
+
         nodes.append({
-            "data": {
-                "id": node_id,
-                "label": node_id,
-                "type": node_type
-            }
+            "data": data
         })
 
-        node_set.add(node_id)
+        node_ids.add(node_id)
 
-    agency = doc["기관"]
-    company = doc["피심인"]
+    company = doc.get("피심인")
+    agency = doc.get("기관")
 
-    add_node(agency, "기관")
-    add_node(company, "회사")
-
-    edges.append({
-        "data": {
-            "source": agency,
-            "target": company,
-            "label": "의결"
+    add_node(
+        agency,
+        "기관",
+        {
+            "case_name": doc.get("사건명")
         }
-    })
+    )
+    add_node(
+        company,
+        "회사",
+        {
+            "case_name": doc.get("사건명"),
+
+            "order": doc.get("주문"),
+
+            "reason": doc.get("이유"),
+
+            "facts": doc.get("기초사실"),
+
+            "decision": doc.get("결론")
+        }
+    )
+    if agency and company:
+        edges.append({
+            "data": {
+                "source": agency,
+                "target": company,
+                "label": "의결"
+            }
+        })
 
     for entity_type, entity_name in entities:
 
         add_node(entity_name, entity_type)
 
-        edges.append({
-            "data": {
-                "source": company,
-                "target": entity_name,
-                "label": entity_type
-            }
-        })
+        if company:
+            edges.append({
+                "data": {
+                    "source": company,
+                    "target": entity_name,
+                    "label": entity_type
+                }
+            })
 
     return {
         "nodes": nodes,
@@ -55,10 +84,9 @@ def build_graph(doc, entities):
     }
 
 
-def save_graph(graph, path):
+def save_graph(graph, output_path):
 
-    with open(path, "w", encoding="utf-8") as f:
-
+    with open(output_path, "w", encoding="utf-8") as f:
         json.dump(
             graph,
             f,

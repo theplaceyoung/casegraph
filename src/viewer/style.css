@@ -1,0 +1,128 @@
+body{
+    margin:0;
+    background:#f5f5f5;
+}
+
+#container{
+    display:flex;
+    width:100vw;
+    height:100vh;
+}
+
+#cy{
+    flex:3;
+    background:#f7f7f7;
+}
+
+#info-panel{
+
+    flex:1;
+
+    overflow:auto;
+
+    padding:20px;
+
+    background:white;
+
+    border-left:1px solid #ddd;
+
+    font-family:sans-serif;
+
+    line-height:1.7;
+
+    box-sizing:border-box;
+}
+
+h2{
+    margin-top:0;
+}
+
+h4{
+    color:#666;
+    margin-bottom:10px;
+}
+
+#node-info{
+
+    margin-top:20px;
+
+    padding:15px;
+
+    background:#fafafa;
+
+    border:1px solid #eee;
+
+    border-radius:10px;
+
+    min-height:200px;
+}
+
+button{
+
+    width:100%;
+
+    padding:12px;
+
+    margin-top:12px;
+
+    border:none;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    transition:0.2s;
+}
+
+button:hover{
+
+    opacity:0.9;
+}
+
+#generate-btn{
+
+    background:#3b82f6;
+
+    color:white;
+}
+
+#export-btn{
+
+    background:#22c55e;
+
+    color:white;
+}
+
+#clear-btn{
+
+    background:#ef4444;
+
+    color:white;
+}
+
+input{
+
+    width:100%;
+
+    box-sizing:border-box;
+
+    padding:10px;
+
+    border:1px solid #ddd;
+
+    border-radius:8px;
+}
+
+hr{
+
+    margin-top:20px;
+    margin-bottom:20px;
+
+    border:none;
+
+    border-top:1px solid #eee;
+}

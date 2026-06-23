@@ -2,26 +2,18 @@ import re
 
 
 def normalize_title(line_text: str) -> str:
-    """
-    짧은 제목이나 헤더에서
-    '공 정 거 래 위 원 회' -> '공정거래위원회'
-    같은 형태를 정리한다.
-    """
 
     line_text = line_text.strip()
 
-    # 너무 긴 문장은 건드리지 않음
     if len(line_text) > 50:
         return line_text
 
-    # 한글 사이 공백 제거
     line_text = re.sub(
         r'(?<=[가-힣])\s+(?=[가-힣])',
         '',
         line_text
     )
 
-    # 숫자 사이 공백 제거
     line_text = re.sub(
         r'(?<=\d)\s+(?=\d)',
         '',
@@ -30,11 +22,23 @@ def normalize_title(line_text: str) -> str:
 
     return line_text
 
+def normalize_headers(text):
 
-def clean_text(text: str) -> str:
-    """
-    전체 markdown 텍스트 정리
-    """
+    replacements = {
+        "사\n건\n명": "사건명",
+        "피\n심\n인": "피심인",
+        "주\n문": "주문",
+        "이\n유": "이유"
+    }
+
+    for old, new in replacements.items():
+        text = text.replace(old, new)
+
+    return text
+
+def clean_text(text: str):
+    
+    text = normalize_headers(text)
 
     lines = text.splitlines()
 
@@ -43,13 +47,10 @@ def clean_text(text: str) -> str:
     for line in lines:
 
         line = normalize_title(line)
-
-        # 양쪽 공백 제거
         line = line.strip()
 
         cleaned_lines.append(line)
 
-    # 빈 줄 3개 이상 → 2개
     result = "\n".join(cleaned_lines)
 
     result = re.sub(r"\n{3,}", "\n\n", result)

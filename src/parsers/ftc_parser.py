@@ -45,6 +45,21 @@ def parse_ftc_document(text):
     result = {}
 
     result["기관"] = "공정거래위원회"
+    
+    m = re.search(
+    r"사건명\s*(.*?)\s*피심인",
+    text,
+    re.DOTALL
+    )
+    result["사건명"] = m.group(1).strip() if m else ""
+
+
+    m = re.search(
+        r"피심인\s*(.*?)\s*심의종결일",
+        text,
+        re.DOTALL
+    )
+    result["피심인"] = m.group(1).split("\n")[0].strip() if m else ""
 
     m = re.search(r"제\d{4}\s*[–-]\s*\d+호", text)
     result["의결번호"] = m.group(0) if m else ""
@@ -53,8 +68,6 @@ def parse_ftc_document(text):
     result["의결일"] = m.group(0) if m else ""
 
     result["사건번호"] = extract_field(text, "사건번호")
-    result["사건명"] = extract_field(text, "사건명")
-    result["피심인"] = extract_field(text, "피심인")
 
     result["주문"] = extract_section(
         text,
@@ -84,5 +97,6 @@ def parse_ftc_document(text):
         text,
         "결론"
     )
-
+    print("피심인 =", result["피심인"])
+    print("사건명 =", result["사건명"])
     return result

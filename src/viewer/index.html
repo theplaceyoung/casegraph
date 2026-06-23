@@ -4,23 +4,60 @@
 
 <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
 
-<style>
-
-#cy{
-width:100vw;
-height:100vh;
-}
-
-</style>
+<link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
 
-<div id="cy"></div>
+<div id="container">
+
+    <div id="cy"></div>
+
+    <div id="info-panel">
+
+        <h2>CaseGraph</h2>
+
+        <p style="color:#888">
+            Legal Decision Knowledge Graph
+        </p>
+
+        <h4>PDF File</h4>
+
+        <input
+            type="file"
+            id="pdf-file"
+            accept=".pdf"
+        >
+
+        <br><br>
+
+        <button id="generate-btn">
+            Generate CaseGraph
+        </button>
+
+        <hr>
+
+        <button id="export-btn">
+            Export JSON
+        </button>
+
+        <hr>
+
+        <button id="clear-btn">
+            Clear Graph
+        </button>
+
+        <hr>
+
+        <div id="node-info">
+            PDF를 업로드하고 Generate CaseGraph를 눌러주세요.
+        </div>
+    </div>
+
+</div>
 
 <script src="graph.js"></script>
 
 </body>
-
 </html>
